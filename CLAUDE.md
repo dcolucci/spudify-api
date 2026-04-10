@@ -1,5 +1,9 @@
 # Claude Code — Project Guide
 
+## Important
+
+Keep `README.md` up to date. If you make any changes that affect the tech stack, prerequisites, environment variables, or commands, update `README.md` to reflect them before finishing your work.
+
 ## What this project is
 
 A personal API that layers on top of Spotify. It lets the owner apply a custom tagging and organization system to their Spotify library, and surfaces convenience endpoints (top-played tracks, albums, playlists, etc.). It is invite-only — not a public product.
