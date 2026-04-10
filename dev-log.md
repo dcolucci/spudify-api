@@ -1,4 +1,9 @@
-## 4/9/26
+## 4/9/26 002
+```
+claude --resume 194ecf49-7347-4d90-a658-1151b5922826
+```
+
+## 4/9/26 001
 Claude code output below following initial scaffolding:
 
 Next steps to actually use it:

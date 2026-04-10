@@ -1,9 +1,11 @@
 import Fastify from 'fastify'
+import { authRoutes } from './routes/auth'
 import { healthRoute } from './routes/health'
 
 const app = Fastify({ logger: true })
 
 app.register(healthRoute)
+app.register(authRoutes)
 
 const start = async () => {
   try {
