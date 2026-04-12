@@ -1,3 +1,9 @@
+## 4/11/26 001
+Next steps:
+ * gain firmer understanding of Spotify auth logic
+ * add token refresh utility
+ * figure out desired user flow
+
 ## 4/9/26 002
 ```
 claude --resume 194ecf49-7347-4d90-a658-1151b5922826
