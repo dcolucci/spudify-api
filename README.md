@@ -68,6 +68,12 @@ To browse the database locally:
 bun run db:studio
 ```
 
+## Docs
+
+System flow and sequence diagrams live in [`docs/`](docs/):
+
+- [`docs/oauth-flow.md`](docs/oauth-flow.md) — Spotify OAuth 2.0 authorization code flow
+
 ## Tests
 
 Bun has a built-in test runner. Tests are not yet written — when added, they will live alongside source files as `*.test.ts` and can be run with:
