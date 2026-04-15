@@ -1,4 +1,8 @@
 ## 4/14/26 001
+Did:
+ * Added Mermaid sequence diagram for auth flow
+ * Built out Spotify token refresh utility
+
 Next steps:
  * build out a basic Spotify API interaction (e.g. fetch user's library)
  * Later: separation of responsibilities of Spotify user auth between API and Client apps)
