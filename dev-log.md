@@ -1,3 +1,8 @@
+## 4/14/26 001
+Next steps:
+ * build out a basic Spotify API interaction (e.g. fetch user's library)
+ * Later: separation of responsibilities of Spotify user auth between API and Client apps)
+
 ## 4/11/26 001
 Next steps:
  * gain firmer understanding of Spotify auth logic
