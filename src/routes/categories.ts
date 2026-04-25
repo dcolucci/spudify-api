@@ -9,6 +9,16 @@ type CreateCategoryBody = {
 }
 
 export async function categoriesRoutes(app: FastifyInstance) {
+  app.get('/categories', { preHandler: [authenticate] }, async (request, reply) => {
+    const userCategories = await db.query.categories.findMany({
+      where: eq(categories.userId, request.userId),
+      columns: { id: true, name: true },
+      orderBy: (c, { asc }) => asc(c.name),
+    })
+
+    reply.send(userCategories)
+  })
+
   app.post<{ Body: CreateCategoryBody }>(
     '/categories',
     { preHandler: [authenticate] },
