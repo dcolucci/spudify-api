@@ -1,7 +1,14 @@
-import type { FastifyInstance } from 'fastify'
+import { Type } from '@sinclair/typebox'
+import type { FastifyPluginAsyncTypebox } from '@fastify/type-provider-typebox'
 
-export async function healthRoute(app: FastifyInstance) {
-  app.get('/health', async () => {
+export const healthRoute: FastifyPluginAsyncTypebox = async (app) => {
+  app.get('/health', {
+    schema: {
+      response: {
+        200: Type.Object({ status: Type.String() }),
+      },
+    },
+  }, async () => {
     return { status: 'ok' }
   })
 }

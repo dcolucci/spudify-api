@@ -11,6 +11,10 @@
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
+    "@fastify/swagger": "^9.7.0",
+    "@fastify/swagger-ui": "^5.2.6",
+    "@fastify/type-provider-typebox": "^6.1.0",
+    "@sinclair/typebox": "^0.34.49",
     "@spotify/web-api-ts-sdk": "^1.2.0",
     "better-sqlite3": "^12.9.0",
     "drizzle-orm": "^0.38.0",
