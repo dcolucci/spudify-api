@@ -74,3 +74,35 @@ Decisions are listed roughly in chronological order. Each entry captures the con
 - Railway provides persistent volumes, supports any Docker/Bun/Node app, and has a deployment workflow similar to Vercel (GitHub-connected, automatic deploys).
 - Railway is slightly less "zero-config" than Vercel for frontend apps, but is the better fit for a persistent API server.
 - Fly.io remains a viable alternative if Railway proves limiting.
+
+---
+
+## 006 — API acts as a non-hydrating join layer between the client and Spotify
+
+**Status:** Accepted
+
+**Context:** The app's purpose is to let users apply custom tagging and categorization to their Spotify library. An early design question was whether this API should fetch Spotify metadata (track names, artwork, audio features, etc.) and return enriched responses to the client, or return only owned data (category and URI relationships) and leave the client to fetch Spotify metadata directly. Spotify's developer terms also restrict persistent storage of their content data, which limits how aggressively a server-side caching approach could be applied.
+
+**Decision:** This API owns category models and their relationships to Spotify URIs only. It does not fetch, hydrate, or cache Spotify content data. Routes return Spotify URIs as opaque identifiers; the client is responsible for calling Spotify's API directly to obtain display metadata (names, artwork, etc.) and merging it locally before rendering.
+
+**Trade-offs:**
+- The client must maintain a Spotify access token and call Spotify's API independently, adding complexity to the client layer.
+- Spotify's batch endpoints (`/v1/tracks?ids=…`, etc.) make this efficient — a full category can typically be hydrated in one or two requests.
+- The API surface and database schema stay narrow and stable, independent of Spotify's response shape.
+- This approach is the most straightforward path to compliance with Spotify's developer terms around content data storage.
+- If query requirements ever grow to include filtering or sorting by Spotify-owned attributes (e.g. BPM, genre), this decision should be revisited.
+
+---
+
+## 007 — Use Spotify OAuth as the API authentication mechanism
+
+**Status:** Accepted
+
+**Context:** The app is invite-only and its entire purpose is Spotify-related — there is no meaningful use of the app without a Spotify account. A separate, independent authentication system (username/password, magic link, etc.) would add implementation overhead with no functional benefit, since Spotify identity verification already gates access.
+
+**Decision:** Authenticating with Spotify via OAuth 2.0 is the sole path to obtaining an API session token. At the end of the OAuth callback, the server issues a session token (stored in the `sessions` table) which the client uses as a bearer token for subsequent API requests. Access is further restricted by an allowlist of Spotify user IDs (`ALLOWED_SPOTIFY_USER_IDS`).
+
+**Trade-offs:**
+- The API has no authentication mechanism independent of Spotify — if Spotify's OAuth is unavailable, no new sessions can be created.
+- This is an acceptable risk given the app's personal, invite-only nature and its inherent dependency on Spotify.
+- If the app ever needed to support non-Spotify-linked users or multiple identity providers, a dedicated auth layer would need to be introduced.

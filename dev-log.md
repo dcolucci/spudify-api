@@ -1,3 +1,13 @@
+## 4/24/26 001
+Did:
+ * Considered architecture decision around whether the API should hydrate Spotify data before returning data to users (e.g., track & artist names), or should only return Spotify URIs and leave it to clients to hydrate (see decision 006)
+ * Added proposed flow diagrams for categorization CRUD flows
+
+Next steps:
+ * need to build session token validation into protected routes
+ * build out categorization CRUD flows
+ * look into `Spotify App Remote SDK` for allowing a native app to "remote control" the Spotify app and play music
+
 ## 4/14/26 001
 Did:
  * Added Mermaid sequence diagram for auth flow
