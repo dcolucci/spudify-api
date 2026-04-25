@@ -78,7 +78,9 @@ bun run db:studio
 
 ## Docs
 
-System flow and sequence diagrams live in [`docs/`](docs/).
+- [`docs/USAGE.md`](docs/USAGE.md) — endpoint reference and usage examples
+- [`docs/oauth-flow.md`](docs/oauth-flow.md) — Spotify OAuth 2.0 flow details
+- [`docs/categorization-flow.md`](docs/categorization-flow.md) — categorization and tagging flow
 
 ## Tests
 
