@@ -27,6 +27,7 @@ Here's a summary of what was built:
   - Idempotent — all inserts use onConflictDoNothing(), so db:seed is safe to run after db:migrate on a fresh DB or against a DB that already has seed data.
   - Fake Spotify tokens — the spotifyTokens row is required by the schema FK, but category routes don't touch Spotify at all, so placeholder strings are fine for now.
 ```
+ * Implemented TypeBox, swagger and swagger-ui for API docs
 
 Next steps:
  * Need to add some documentation or something to help agents find the `bun` executable

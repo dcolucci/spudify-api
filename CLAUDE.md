@@ -15,6 +15,8 @@ A personal API that layers on top of Spotify. It lets the owner apply a custom t
 | Runtime | Bun |
 | Language | TypeScript |
 | Framework | Fastify v5 |
+| Schema validation | TypeBox (`@sinclair/typebox`) |
+| API docs | @fastify/swagger + @fastify/swagger-ui (Swagger UI at `/documentation`) |
 | ORM | Drizzle ORM |
 | Database | SQLite (bun:sqlite, WAL mode) |
 | Spotify | @spotify/web-api-ts-sdk |
@@ -51,7 +53,8 @@ DECISIONS.md         # Architecture decision records
 
 ## Conventions
 
-- **Routes** are Fastify plugin functions (`async function fooRoute(app: FastifyInstance)`), registered in `src/index.ts` via `app.register(...)`. Add new route files under `src/routes/` and register them in `src/index.ts`.
+- **Routes** are typed Fastify plugin functions using `FastifyPluginAsyncTypebox` (from `@fastify/type-provider-typebox`), registered in `src/index.ts` via `app.register(...)`. Add new route files under `src/routes/` and register them in `src/index.ts`. Do not use the plain `FastifyInstance` signature — it does not carry the TypeBox type provider.
+- **Route schemas** — every route must define a `schema` object using TypeBox (`Type.*`). At minimum include `response` schemas for all status codes the route can return. Authenticated routes must also include `security: [{ bearerAuth: [] }]` so they appear correctly in the Swagger UI. TypeBox schemas are the single source of truth for runtime validation, TypeScript types, and generated API docs — do not add redundant manual type checks for things the schema already enforces (e.g. `typeof x === 'string'`).
 - **Schema changes** always go through Drizzle migrations: edit `src/db/schema.ts`, run `db:generate`, commit the generated migration file, run `db:migrate`. Never edit migration files by hand.
 - **Seeding** — whenever a new model is introduced with a POST/create route, add representative seed data for it in `src/db/seed.ts`. Seed inserts must use `onConflictDoNothing()` to stay idempotent.
 - **Environment variables** — all config comes from env vars. `.env.example` is the canonical list. Bun loads `.env` automatically; no `dotenv` import needed.

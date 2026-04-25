@@ -8,6 +8,8 @@ Invite-only — not a public product.
 
 - **Runtime:** [Bun](https://bun.sh)
 - **Framework:** [Fastify v5](https://fastify.dev)
+- **Schema validation:** [TypeBox](https://github.com/sinclairzx81/typebox) — request/response schemas double as TypeScript types
+- **API docs:** [@fastify/swagger](https://github.com/fastify/fastify-swagger) + [@fastify/swagger-ui](https://github.com/fastify/fastify-swagger-ui)
 - **Database:** SQLite via `bun:sqlite`
 - **ORM:** [Drizzle](https://orm.drizzle.team)
 - **Spotify:** [@spotify/web-api-ts-sdk](https://github.com/spotify/spotify-web-api-ts-sdk)
@@ -75,6 +77,16 @@ To browse the database locally:
 ```bash
 bun run db:studio
 ```
+
+## API docs
+
+Interactive docs (Swagger UI) are served by the running server at:
+
+```
+http://localhost:3000/documentation
+```
+
+The raw OpenAPI spec is available at `/documentation/json`. Docs are generated automatically from the TypeBox schemas defined on each route — no separate spec file to maintain.
 
 ## Docs
 
