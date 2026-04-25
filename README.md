@@ -78,9 +78,7 @@ bun run db:studio
 
 ## Docs
 
-System flow and sequence diagrams live in [`docs/`](docs/):
-
-- [`docs/oauth-flow.md`](docs/oauth-flow.md) — Spotify OAuth 2.0 authorization code flow
+System flow and sequence diagrams live in [`docs/`](docs/).
 
 ## Tests
 
