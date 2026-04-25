@@ -1,11 +1,20 @@
 import Fastify from 'fastify'
 import { authRoutes } from './routes/auth'
+import { categoriesRoutes } from './routes/categories'
 import { healthRoute } from './routes/health'
 
+declare module 'fastify' {
+  interface FastifyRequest {
+    userId: number
+  }
+}
+
 const app = Fastify({ logger: true })
+app.decorateRequest('userId', 0)
 
 app.register(healthRoute)
 app.register(authRoutes)
+app.register(categoriesRoutes)
 
 const start = async () => {
   try {

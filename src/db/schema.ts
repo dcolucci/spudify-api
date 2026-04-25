@@ -1,5 +1,6 @@
 import { integer, sqliteTable, text, unique } from 'drizzle-orm/sqlite-core'
 
+
 export const users = sqliteTable('users', {
   id: integer('id').primaryKey({ autoIncrement: true }),
   spotifyUserId: text('spotify_user_id').notNull().unique(),
@@ -37,3 +38,18 @@ export const sessions = sqliteTable('sessions', {
     .notNull()
     .$defaultFn(() => new Date()),
 })
+
+export const categories = sqliteTable(
+  'categories',
+  {
+    id: integer('id').primaryKey({ autoIncrement: true }),
+    userId: integer('user_id')
+      .notNull()
+      .references(() => users.id),
+    name: text('name').notNull(),
+    createdAt: integer('created_at', { mode: 'timestamp' })
+      .notNull()
+      .$defaultFn(() => new Date()),
+  },
+  (table) => [unique().on(table.userId, table.name)]
+)

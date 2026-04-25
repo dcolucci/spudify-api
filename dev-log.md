@@ -1,3 +1,27 @@
+## 4/25/26 001
+Did:
+```
+Here's a summary of what was built:
+
+  ---
+  Schema (src/db/schema.ts) — Added a categories table with id, userId (FK → users), name, createdAt, and a unique constraint on (userId, name) to prevent duplicate category names per
+  user. Migration generated and applied.
+
+  Auth middleware (src/lib/authenticate.ts) — A reusable Fastify preHandler function that:
+  - Validates the Authorization: Bearer <token> header
+  - Looks up the token in the sessions table
+  - Returns 401 if missing or invalid
+  - Attaches request.userId for use in route handlers
+
+  POST /categories (src/routes/categories.ts) — Protected by authenticate. Validates that name is a non-empty string, checks for a duplicate category name for that user (returning 409 if
+  found), inserts the row, and responds 201 { id, name }.
+
+  src/index.ts — Added declare module 'fastify' augmentation for request.userId, app.decorateRequest('userId', 0), and registered categoriesRoutes.
+  ```
+
+Next steps:
+ * Need to add some documentation or something to help agents find the `bun` executable
+
 ## 4/24/26 001
 Did:
  * Considered architecture decision around whether the API should hydrate Spotify data before returning data to users (e.g., track & artist names), or should only return Spotify URIs and leave it to clients to hydrate (see decision 006)
