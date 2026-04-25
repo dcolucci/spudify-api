@@ -62,6 +62,14 @@ bun run db:migrate   # apply it
 
 Migration files live in `drizzle/` and are committed to the repo. Never edit them by hand.
 
+To seed the database with a test user, session token, and sample categories:
+
+```bash
+bun run db:seed
+```
+
+This is idempotent — safe to re-run. The session token printed to the console (`test_session_token`) can be used as a `Bearer` token when testing authenticated routes locally.
+
 To browse the database locally:
 
 ```bash

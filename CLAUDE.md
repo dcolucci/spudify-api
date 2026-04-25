@@ -29,6 +29,7 @@ bun run dev          # Start server with watch mode
 bun run start        # Start server (production)
 bun run db:generate  # Generate a new Drizzle migration from schema changes
 bun run db:migrate   # Apply pending migrations
+bun run db:seed      # Seed the database with a test user and sample categories
 bun run db:studio    # Open Drizzle Studio (local DB browser)
 ```
 
@@ -52,6 +53,7 @@ DECISIONS.md         # Architecture decision records
 
 - **Routes** are Fastify plugin functions (`async function fooRoute(app: FastifyInstance)`), registered in `src/index.ts` via `app.register(...)`. Add new route files under `src/routes/` and register them in `src/index.ts`.
 - **Schema changes** always go through Drizzle migrations: edit `src/db/schema.ts`, run `db:generate`, commit the generated migration file, run `db:migrate`. Never edit migration files by hand.
+- **Seeding** — whenever a new model is introduced with a POST/create route, add representative seed data for it in `src/db/seed.ts`. Seed inserts must use `onConflictDoNothing()` to stay idempotent.
 - **Environment variables** — all config comes from env vars. `.env.example` is the canonical list. Bun loads `.env` automatically; no `dotenv` import needed.
 - **Database access** — import `db` from `src/db/index.ts` directly in route files. No repository layer abstraction at this stage.
 

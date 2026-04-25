@@ -1,5 +1,6 @@
 ## 4/25/26 001
 Did:
+ * Created a create categories route, and built in authentication middleware
 ```
 Here's a summary of what was built:
 
@@ -17,7 +18,15 @@ Here's a summary of what was built:
   found), inserts the row, and responds 201 { id, name }.
 
   src/index.ts — Added declare module 'fastify' augmentation for request.userId, app.decorateRequest('userId', 0), and registered categoriesRoutes.
-  ```
+```
+ * created utility to seed database:
+```
+  A few notes on the design choices:
+
+  - Fixed session token (test_session_token) — keeps your curl/Postman commands stable across re-seeds. You don't have to update the token every time you reset the DB.
+  - Idempotent — all inserts use onConflictDoNothing(), so db:seed is safe to run after db:migrate on a fresh DB or against a DB that already has seed data.
+  - Fake Spotify tokens — the spotifyTokens row is required by the schema FK, but category routes don't touch Spotify at all, so placeholder strings are fine for now.
+```
 
 Next steps:
  * Need to add some documentation or something to help agents find the `bun` executable
